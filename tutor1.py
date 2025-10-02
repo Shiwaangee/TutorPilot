@@ -8,6 +8,7 @@ load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
 
 st.set_page_config(page_title="TutorPilot", layout="centered")
+
 #Add Font Import to Your App
 st.markdown("""
     <style>
@@ -97,25 +98,29 @@ if user_input:
         time.sleep(1.5)
 
     # Update chat history
-    st.session_state.chat_history.append({"role": "user", "content": user_input})
+    st.session_state.chat_history.append({"role": "user", "content": user_input, "mode": mode})
     reply = markdown_to_html_list(reply)
-    st.session_state.chat_history.append({"role": "assistant", "content": reply})
+    st.session_state.chat_history.append({"role": "assistant", "content": reply, "mode": mode})
 
 # Custom left-right chat layout with themed colors
 for msg in st.session_state.chat_history:
+    bubble_mode = msg.get("mode", mode)  # fallback to current mode if missing
+
     if msg["role"] == "user":
         st.markdown(f"""
             <div style='text-align: right; background-color:#E6F2FF; padding:12px; border-radius:12px; margin:6px 0; width: fit-content; max-width:80%; margin-left:auto; box-shadow: 0 2px 4px rgba(0,0,0,0.05);'>
+                <div style='font-size:13px; font-weight:600; color:#555; margin-bottom:6px;'>🧑‍🎓 {bubble_mode}</div>
                 <span style='font-size:16px; color:#2A2A2A; line-height:1.6; font-weight:500;'>{msg["content"]}</span>
             </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown(f"""
             <div style='text-align: left; background-color:#FFFBEA; padding:12px; border-radius:12px; margin:6px 0; width: fit-content; max-width:80%; margin-right:auto; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size:16px; color:#2A2A2A; line-height:1.6; font-weight:500;'>
-                <div style='font-size:13px; font-weight:600; color:#555; margin-bottom:6px;'>📌 {mode}</div>
+                <div style='font-size:13px; font-weight:600; color:#555; margin-bottom:6px;'>📌 {bubble_mode}</div>
                 {msg["content"]}
             </div>
         """, unsafe_allow_html=True)
+
 
 
 
