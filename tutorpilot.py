@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
 
-
 st.title("TutorPilot – Powered by OpenRouter")
 
 # subject = st.selectbox("Choose subject:", ["DSA", "Project Management", "Entrepreneurship", "Custom"])
@@ -23,12 +22,28 @@ if subject == "Custom":
     if custom_subject:
         subject = custom_subject  # Replace "Custom" with actual input
 
-
 mode = st.radio("Choose mode:", ["Exam Mode", "Concept Mode", "Quiz Mode"])
 user_input = st.text_input("Ask your question:")
 
 if user_input:
     system_prompt = f"You are a helpful tutor for {subject}. Use {mode} style. Explain simply and clearly."
+    
+        #     system_prompt = f"""
+        # You are a highly skilled tutor for {subject}.
+        # Use {mode} style:
+        # - In Exam Mode: give concise, bullet-point answers.
+        # - In Concept Mode: explain with analogies and examples.
+        # - In Quiz Mode: ask questions first, then explain answers.
+        # Always be clear, friendly, and avoid jargon.
+        # """
+
+        #         system_prompt = f"""
+        # You are a tutor for {subject}. Here’s how you should answer:
+        # Q: What is a stack?
+        # A: A stack is a data structure that follows LIFO. Example: undo in text editor.
+
+        # Now answer the next question in the same style.
+        # """      this is few-shot prompting
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -48,5 +63,4 @@ if user_input:
         st.write(reply)
     else:
         st.error(f"Error: {response.status_code} – {response.text}")
-
 
