@@ -3,6 +3,7 @@ import requests
 import os
 import time
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
@@ -164,6 +165,29 @@ if st.session_state.confirm_clear:
 if st.session_state.clear_message:
     st.toast(st.session_state.clear_message)
     st.session_state.clear_message = ""
+
+# Export notes
+notes = f"TutorPilot Notes\nSubject: {subject}\nMode: {mode}\n\n"
+for msg in st.session_state.chat_history:
+    if msg["role"] == "user":
+        notes += f"Q: {msg['content']}\n"
+    elif msg["role"] == "assistant":
+        # Remove all HTML tags from assistant response
+        clean_response = re.sub(r'<[^>]+>', '', msg['content'])
+        notes += f"A: {clean_response}\n\n"
+
+import base64
+b64 = base64.b64encode(notes.encode()).decode()
+download_link = f'''
+<p style="font-size:13px;">
+    <a href="data:text/plain;base64,{b64}" download="TutorPilot_Notes.txt"
+    style="color:#555; text-decoration:none; font-weight:500;">
+        📥 Download Your Revision Notes
+    </a>
+</p>
+'''
+st.markdown(download_link, unsafe_allow_html=True)
+
 
 # Footer
 st.markdown("""
