@@ -16,6 +16,17 @@ st.markdown("""
     * {
         font-family: 'Inter', sans-serif;
     }
+    .footer-link {
+        color: #888;
+        text-decoration: underline;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+        color: #444;
+        text-decoration: none;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -158,10 +169,11 @@ if st.session_state.clear_message:
 st.markdown("""
 <hr style="margin-top: 5px; margin-bottom: 20px;">
 <div style='text-align: center; font-size: 14px; color: #888;'>
-    Think TutorPilot could be better? <a href='mailto:shiwaangee@gmail.com' style='color: #888; text-decoration: underline; font-weight: 500;'>Let us know</a><br>
+    Think TutorPilot could be better? <a class='footer-link' href='mailto:shiwaangee@gmail.com'>Let us know</a><br>
     <span style='font-size: 12px;'>© 2025 TutorPilot. All rights reserved.</span>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
