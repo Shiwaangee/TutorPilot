@@ -4,6 +4,8 @@ import os
 import time
 from dotenv import load_dotenv
 import re
+from fpdf import FPDF
+import io
 
 load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
@@ -172,21 +174,40 @@ for msg in st.session_state.chat_history:
     if msg["role"] == "user":
         notes += f"Q: {msg['content']}\n"
     elif msg["role"] == "assistant":
-        # Remove all HTML tags from assistant response
         clean_response = re.sub(r'<[^>]+>', '', msg['content'])
         notes += f"A: {clean_response}\n\n"
 
+from datetime import datetime
+timestamp = datetime.now().strftime("%Y-%m-%d")
+txt_filename = f"TutorPilot_Notes_{subject}_{timestamp}.txt"
+pdf_filename = f"TutorPilot_Notes_{subject}_{timestamp}.pdf"
+
+
+# TXT download link
 import base64
-b64 = base64.b64encode(notes.encode()).decode()
-download_link = f'''
-<p style="font-size:13px;">
-    <a href="data:text/plain;base64,{b64}" download="TutorPilot_Notes.txt"
-    style="color:#555; text-decoration:none; font-weight:500;">
-        📥 Download Your Revision Notes
-    </a>
+b64_txt = base64.b64encode(notes.encode()).decode()
+
+# PDF generation
+pdf = FPDF()
+pdf.add_page()
+pdf.set_auto_page_break(auto=True, margin=15)
+pdf.set_font("Arial", size=12)
+for line in notes.split('\n'):
+    pdf.multi_cell(0, 10, line)
+pdf_bytes = pdf.output(dest='S').encode('latin-1')
+b64_pdf = base64.b64encode(pdf_bytes).decode()
+
+# Combined caption-style links
+download_links = f'''
+<p style="font-size:13px; color:#555;">
+    📥 Download Your Revision Notes:
+    <a href="data:text/plain;base64,{b64_txt}" download="{txt_filename}"
+       style="color:#555; text-decoration:none; font-weight:500;">.txt</a> /
+    <a href="data:application/pdf;base64,{b64_pdf}" download="{pdf_filename}"
+       style="color:#555; text-decoration:none; font-weight:500;">.pdf</a>
 </p>
 '''
-st.markdown(download_link, unsafe_allow_html=True)
+st.markdown(download_links, unsafe_allow_html=True)
 
 
 # Footer
