@@ -40,9 +40,6 @@ elif mode == "Quiz Mode":
 
 system_prompt = f"You are a highly skilled tutor for {subject}. Use {mode} style: {style} Always be clear, friendly, and avoid jargon."
 
-# Show system prompt for transparency
-with st.expander("🔍 Show system prompt"):
-    st.code(system_prompt.strip(), language="markdown")
 
 # Initialize chat history
 if "chat_history" not in st.session_state:
