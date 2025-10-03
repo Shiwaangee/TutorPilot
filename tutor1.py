@@ -30,6 +30,8 @@ if subject == "Custom":
 
 mode = st.radio("Choose mode:", ["Exam Mode", "Concept Mode", "Quiz Mode"])
 
+st.divider()
+
 # Prompt logic
 if mode == "Exam Mode":
     style = " First give answer in a concise manner with bullet-points in an easy language. After answering ask for how much marks the answer is needed and also ask whether they want the answers in paragraph or point-wise. If they say point-wise then give that much number of different points as that of the marks. But if they say paragraph then keep it in a descriptive paragraph format having double the number of sentences as that of the marks. If they don't specify anything then give answer in points and the number of points must be equal to the marks and if they do not specify marks take marks as 5"
@@ -118,6 +120,9 @@ for msg in st.session_state.chat_history:
 
 
 # Optional: Clear chat
+#add line break
+st.markdown("<br>", unsafe_allow_html=True) 
+
 # Clear chat with instant single-click confirmation using on_click
 def clear_chat():
     st.session_state.chat_history = []
@@ -150,9 +155,8 @@ if st.session_state.clear_message:
     st.session_state.clear_message = ""
 
 # Footer
-# Footer layout
 st.markdown("""
-<hr style="margin-top: 40px; margin-bottom: 20px;">
+<hr style="margin-top: 5px; margin-bottom: 20px;">
 <div style='text-align: center; font-size: 14px; color: #888;'>
     Think TutorPilot could be better? <a href='mailto:shiwaangee@gmail.com' style='color: #888; text-decoration: underline; font-weight: 500;'>Let us know</a><br>
     <span style='font-size: 12px;'>© 2025 TutorPilot. All rights reserved.</span>
