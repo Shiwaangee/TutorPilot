@@ -193,7 +193,20 @@ pdf.add_page()
 pdf.set_auto_page_break(auto=True, margin=15)
 pdf.set_font("Arial", size=12)
 for line in notes.split('\n'):
-    pdf.multi_cell(0, 10, line)
+    line = line.strip()
+    if line.startswith("Q:"):
+        pdf.set_text_color(0, 0, 0)  # Black
+        pdf.set_font("Arial", 'B', 12)  # Bold
+        pdf.multi_cell(0, 10, line)
+    elif line.startswith("A:"):
+        pdf.set_text_color(0, 0, 0)  # Black
+        pdf.set_font("Arial", '', 12)  # Normal
+        pdf.multi_cell(0, 10, line)
+    else:
+        pdf.set_text_color(0, 0, 0)  # Black
+        pdf.set_font("Arial", '', 12)  # Normal
+        pdf.multi_cell(0, 10, line)
+
 pdf_bytes = pdf.output(dest='S').encode('latin-1')
 b64_pdf = base64.b64encode(pdf_bytes).decode()
 
@@ -218,7 +231,6 @@ st.markdown("""
     <span style='font-size: 12px;'>© 2025 TutorPilot. All rights reserved.</span>
 </div>
 """, unsafe_allow_html=True)
-
 
 
 
