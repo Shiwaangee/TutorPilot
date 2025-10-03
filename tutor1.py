@@ -48,8 +48,6 @@ with st.expander("🔍 Show system prompt"):
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-import re
-
 def markdown_to_html_list(text):
     lines = text.strip().split("\n")
     html_lines = []
@@ -95,14 +93,13 @@ if user_input:
             reply = response.json()["choices"][0]["message"]["content"]
         else:
             reply = f"Error: {response.status_code} – {response.text}"
-        time.sleep(1.5)
 
     # Update chat history
     st.session_state.chat_history.append({"role": "user", "content": user_input, "mode": mode})
     reply = markdown_to_html_list(reply)
     st.session_state.chat_history.append({"role": "assistant", "content": reply, "mode": mode})
 
-# Custom left-right chat layout with themed colors
+# Custom left-right chat layout with themed colors # Chat layout loop
 for msg in st.session_state.chat_history:
     bubble_mode = msg.get("mode", mode)  # fallback to current mode if missing
 
@@ -120,7 +117,6 @@ for msg in st.session_state.chat_history:
                 {msg["content"]}
             </div>
         """, unsafe_allow_html=True)
-
 
 
 
