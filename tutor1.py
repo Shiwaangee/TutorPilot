@@ -152,3 +152,17 @@ if st.session_state.clear_message:
     st.toast(st.session_state.clear_message)
     st.session_state.clear_message = ""
 
+# Footer
+# Footer layout
+st.markdown("""
+<hr style="margin-top: 40px; margin-bottom: 20px;">
+<div style='text-align: center; font-size: 14px; color: #888;'>
+    Think TutorPilot could be better? <a href='mailto:shiwaangee@gmail.com' style='color: #888; text-decoration: underline; font-weight: 500;'>Let us know</a><br>
+    <span style='font-size: 12px;'>© 2025 TutorPilot. All rights reserved.</span>
+</div>
+""", unsafe_allow_html=True)
+
+
+
+
+
