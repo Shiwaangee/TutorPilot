@@ -121,5 +121,34 @@ for msg in st.session_state.chat_history:
 
 
 # Optional: Clear chat
-if st.button("🧹 Clear Chat"):
+# Clear chat with instant single-click confirmation using on_click
+def clear_chat():
     st.session_state.chat_history = []
+    st.session_state.confirm_clear = False
+    st.session_state.clear_message = "✅ Chat cleared!"
+
+def cancel_clear():
+    st.session_state.confirm_clear = False
+    st.session_state.clear_message = "❌ Cancelled."
+
+if "confirm_clear" not in st.session_state:
+    st.session_state.confirm_clear = False
+if "clear_message" not in st.session_state:
+    st.session_state.clear_message = ""
+
+if st.button("🧹 Clear Chat"):
+    st.session_state.confirm_clear = True
+    st.session_state.clear_message = ""
+
+if st.session_state.confirm_clear:
+    st.warning("Are you sure you want to clear the chat?")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        st.button("✅ Yes, clear", on_click=clear_chat)
+    with col2:
+        st.button("❌ Cancel", on_click=cancel_clear)
+
+if st.session_state.clear_message:
+    st.toast(st.session_state.clear_message)
+    st.session_state.clear_message = ""
+
