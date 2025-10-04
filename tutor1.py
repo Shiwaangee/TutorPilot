@@ -36,7 +36,7 @@ st.markdown("""
 st.title("TutorPilot – AI Exam Tutor")
 
 # Subject and mode selection
-subject = st.selectbox("Choose subject:", ["DSA", "Project Management", "Entrepreneurship", "Custom"], index=1)
+subject = st.selectbox("Choose subject:", ["English", "Chemistry", "DSA", "Project Management"], index=0)
 if subject == "Custom":
     custom_subject = st.text_input("Enter your custom subject:")
     if custom_subject:
@@ -48,13 +48,18 @@ st.divider()
 
 # Prompt logic
 if mode == "Exam Mode":
-    style = " First give answer in a concise manner with bullet-points in an easy language. After answering ask for how much marks the answer is needed and also ask whether they want the answers in paragraph or point-wise. If they say point-wise then give that much number of different points as that of the marks. But if they say paragraph then keep it in a descriptive paragraph format having double the number of sentences as that of the marks. If they don't specify anything then give answer in points and the number of points must be equal to the marks and if they do not specify marks take marks as 5"
+    style = "First think, the input is which type of topic whether it has numericals or theory or is a practice topic(practice topic means a subject's topic which is understood by practicing questions for example in english active voice passive voice)." \
+    " If it is a practice topic or numerical:" \
+    " then give a extremely detailed explanation of the topic which covers everything and then give 3 questions with detailed solutions then ask whether they want to practice if they say yes then give questions without answers and ask for answers "\
+    "Remember you are extremely strict while checking answers.Do not praise the user unless the answer is fully correct. If the user's answer has any wrong spelling point it out. Always compare the user's answer with your ideal answer and you will get one of the two cases. The first case is the user's answer will differ from your ideal answer somewhere or totally but will be correct, in this case tell them it can be improved by giving your answer. The second case is the user's answer differs from your answer and is also wrong in this case mark it wrong and tell them why the answer is wrong providing your answers also."\
+    "Offer tips to improve. Your goal is to train precision and mastery, not just surface-level correctness. Ask the user if they want all the formulas related to that topic or rules related to that topic. If they say yes provide them with all the formulas or rules in a very well formatted way." 
+
 elif mode == "Concept Mode":
     style = "Explain with concepts very easily and example related to the question, keep a section of intution mentioning intution which describes the intution required to answer that question and also mention real-life examples based on users interest to make it more clear"
 elif mode == "Quiz Mode":
     style = "Provide multiple choice questions with four options. After the user selects an option, explain why the correct answer is right and why the other options are wrong."
 
-system_prompt = f"You are a highly skilled tutor for {subject}. Use {mode} style: {style} Always be clear, friendly, and avoid jargon."
+system_prompt = f"You are a highly skilled tutor for {subject}. Use {mode} style: {style}. Keep in mind that you first talk in a very common language because you must think that the student asking does not know anything about that topic and you have to build a bridge between the students current knowledge with the topic so the words you use are more familiar and normal because you are a teacher not a book reader you have to make them understand so be aware you are not just presenting the bookish language. Also, when checking answers, **do not be lenient**. You are a strict examiner.  Also, use markdown formatting for better readability, including bullet points, numbered lists, and bold text where appropriate."
 
 
 # Initialize chat history
