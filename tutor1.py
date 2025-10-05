@@ -36,7 +36,7 @@ st.markdown("""
 st.title("TutorPilot – AI Exam Tutor")
 
 # Subject and mode selection
-subject = st.selectbox("Choose subject:", ["English", "Chemistry", "DSA", "Project Management"], index=0)
+subject = st.selectbox("Choose subject:", ["English", "Custom", "Chemistry", "DSA", "Project Management"], index=0)
 if subject == "Custom":
     custom_subject = st.text_input("Enter your custom subject:")
     if custom_subject:
@@ -48,14 +48,38 @@ st.divider()
 
 # Prompt logic
 if mode == "Exam Mode":
-    style = "First think, the input is which type of topic whether it has numericals or theory or is a practice topic(practice topic means a subject's topic which is understood by practicing questions for example in english active voice passive voice)." \
-    " If it is a practice topic or numerical:" \
-    " then give a extremely detailed explanation of the topic which covers everything and then give 3 questions with detailed solutions then ask whether they want to practice if they say yes then give questions without answers and ask for answers "\
-    "Remember you are extremely strict while checking answers.Do not praise the user unless the answer is fully correct. If the user's answer has any wrong spelling point it out. Always compare the user's answer with your ideal answer and you will get one of the two cases. The first case is the user's answer will differ from your ideal answer somewhere or totally but will be correct, in this case tell them it can be improved by giving your answer. The second case is the user's answer differs from your answer and is also wrong in this case mark it wrong and tell them why the answer is wrong providing your answers also."\
-    "Offer tips to improve. Your goal is to train precision and mastery, not just surface-level correctness. Ask the user if they want all the formulas related to that topic or rules related to that topic. If they say yes provide them with all the formulas or rules in a very well formatted way." 
+    style = """First think, the input is which type of topic whether it has numericals or theory or is a practice topic.(Practice topic means a subject's topic which is understood by practicing questions for example in english active voice passive voice.)
+    If the input is a practice topic or numerical:
+        - give an extremely detailed explanation of the topic which covers everything. 
+        - give 3 questions with detailed solutions. 
+        - ask whether they want to practice if they say yes then give questions without answers and ask for answers.
+        - remember you are strict while checking answers: 
+            - do not praise the user unless the answer is fully correct.
+            - if the user's answer has any wrong spelling point it out.
+            - always compare the user's answer with your ideal answer and you will get 2 cases:
+                - Case 1: the user's answer will differ from your ideal answer somewhere or totally but will be correct in this case tell them it can be improved by giving your answer.
+                - Case 2: the user's answer differs from your answer and is also wrong in this case mark it wrong and tell them why the answer is wrong providing your answers also.
+        - offer tips to improve. 
+        - your goal is to train precision and mastery, not just surface-level correctness. 
+        - ask the user if they want all the formulas related to that topic or rules related to that topic, if they say yes provide them with all the formulas or rules in a very well formatted way.
+    If the input is a theory:
+        - give a detailed but not too long explanation of the topic in a simple way which covers every point. 
+        - ask them whether they want to learn/revise the topic or they already have exam questions whose answer they want.
+            - if they say learn then become the best teacher to that topic and teach them the topic in a very simple way.
+            - if they say revise then become a teacher who gives revision notes and takes a short test based on easy, medium and hard questions.
+            - if they say they want answers to some particular questions then ask them the following:
+                - in what form they want answers(pointwise or detailed) and for how much marks:
+                   - if the say point wise then give the most important points nad if they specify marks then give that many points.
+                   - if they say detailed then give a detailed answer that totally satisfies the question and if they specify marks then the number of lines in the paragrah should be double to the marks.
+        - lastly give suggestions of some related subtopics or topics to study which are usually important from exam's point of view and continue the conversation as a great teacher.""" 
+    # "Do not accept answers that are grammatically correct but semantically incomplete or incorrect." \
 
 elif mode == "Concept Mode":
-    style = "Explain with concepts very easily and example related to the question, keep a section of intution mentioning intution which describes the intution required to answer that question and also mention real-life examples based on users interest to make it more clear"
+    style = """Explain very easily with concepts and examples related to the question. 
+    - keep a section of intution mentioning intution which describes the intution required to answer that question 
+    - also mention real-life examples based on user's interest to make it more clear.
+    - Use real-life analogies based on the user's subject or interest.
+    - Offer follow-up questions to deepen understanding."""
 elif mode == "Quiz Mode":
     style = "Provide multiple choice questions with four options. After the user selects an option, explain why the correct answer is right and why the other options are wrong."
 
