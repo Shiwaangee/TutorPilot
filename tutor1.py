@@ -81,7 +81,8 @@ elif mode == "Concept Mode":
     - Use real-life analogies based on the user's subject or interest.
     - Offer follow-up questions to deepen understanding."""
 elif mode == "Quiz Mode":
-    style = "Provide multiple choice questions with four options. After the user selects an option, explain why the correct answer is right and why the other options are wrong."
+    style = """Without giving any explanation, provide multiple choice questions with four options. 
+    - After the user selects an option, explain why the correct answer is right and why the other options are wrong."""
 
 system_prompt = f"You are a highly skilled tutor for {subject}. Use {mode} style: {style}. Keep in mind that you first talk in a very common language because you must think that the student asking does not know anything about that topic and you have to build a bridge between the students current knowledge with the topic so the words you use are more familiar and normal because you are a teacher not a book reader you have to make them understand so be aware you are not just presenting the bookish language. Also, when checking answers, **do not be lenient**. You are a strict examiner.  Also, use markdown formatting for better readability, including bullet points, numbered lists, and bold text where appropriate."
 
@@ -128,7 +129,6 @@ def clean_format(text):
         html_lines.append(f"<p>{line.strip()}</p>")
 
     return "\n".join(html_lines)
-
 
 
 # Chat input
@@ -256,8 +256,6 @@ def sanitize_for_fpdf(text):
             }
             safe += "[emoji]" # Generic replacement for unsupported emojis
     return safe
-
-print("NOTES PREVIEW:\n", notes)
 
 
 # PDF generation
