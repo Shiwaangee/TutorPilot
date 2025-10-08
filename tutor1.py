@@ -112,6 +112,25 @@ def markdown_to_html_list(text):
 
     return "\n".join(html_lines)
 
+def clean_format(text):
+    lines = text.strip().split("\n")
+    html_lines = []
+
+    for line in lines:
+        # Remove markdown headers and asterisks
+        line = re.sub(r"^#+\s*", "", line)  # Remove headings like #, ##
+        line = re.sub(r"\*+", "", line)     # Remove all asterisks
+
+        # Preserve numbered and dash bullets, bold and italics
+        line = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", line)  # Bold
+        line = re.sub(r"\*(.+?)\*", r"<em>\1</em>", line)              # Italics
+
+        html_lines.append(f"<p>{line.strip()}</p>")
+
+    return "\n".join(html_lines)
+
+
+
 # Chat input
 user_input = st.chat_input("Ask your question...")
 
@@ -124,7 +143,12 @@ if user_input:
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "openai/gpt-3.5-turbo",
+        "model": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free", 
+        # 0.65, 9 jul, 83.95 working niceliy just giving the details of what it is thinking like in theory it is writing **Think: Identify the type of topic** 
+        #14.53
+
+        # "model": "meta-llama/llama-3.3-8b-instruct:free", 
+        # 0.23, 14 may, 219.3 working but too direct asks to write yes or no 
         "messages": messages
     }
 
@@ -138,7 +162,7 @@ if user_input:
 
     # Update chat history
     st.session_state.chat_history.append({"role": "user", "content": user_input, "mode": mode})
-    reply = markdown_to_html_list(reply)
+    reply = clean_format(reply)
     st.session_state.chat_history.append({"role": "assistant", "content": reply, "mode": mode})
 
 # Custom left-right chat layout with themed colors # Chat layout loop
@@ -260,7 +284,6 @@ st.markdown("""
     <span style='font-size: 12px;'>© 2025 TutorPilot. All rights reserved.</span>
 </div>
 """, unsafe_allow_html=True)
-
 
 
 
