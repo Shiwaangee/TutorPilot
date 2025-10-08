@@ -48,7 +48,7 @@ st.divider()
 
 # Prompt logic
 if mode == "Exam Mode":
-    style = """First think, the input is which type of topic whether it has numericals or theory or is a practice topic.(Practice topic means a subject's topic which is understood by practicing questions for example in english active voice passive voice.)
+    style = """First think internally, the input is which type of topic whether it has numericals or theory or is a practice topic.(Practice topic means a subject's topic which is understood by practicing questions for example in english active voice passive voice.)
     If the input is a practice topic or numerical:
         - give an extremely detailed explanation of the topic which covers everything. 
         - give 3 questions with detailed solutions. 
@@ -228,7 +228,9 @@ for msg in st.session_state.chat_history:
         notes += f"Q: {msg['content']}\n"
     elif msg["role"] == "assistant":
         clean_response = re.sub(r'<[^>]+>', '', msg['content'])
+        clean_response = "\n".join([line.strip() for line in clean_response.splitlines() if line.strip()])
         notes += f"A: {clean_response}\n\n"
+
 
 from datetime import datetime
 timestamp = datetime.now().strftime("%Y-%m-%d")
@@ -240,27 +242,56 @@ pdf_filename = f"TutorPilot_Notes_{subject}_{timestamp}.pdf"
 import base64
 b64_txt = base64.b64encode(notes.encode()).decode()
 
+def sanitize_for_fpdf(text):
+    safe = ""
+    for char in text:
+        try:
+            char.encode("latin-1")
+            safe += char
+        except UnicodeEncodeError:
+            replacements = {
+                "→": "->", "🔁": "[loop]", "🧠": "[mind]", "🌎": "[earth]",
+                "🔄": "[recurse]", "🧩": "[piece]", "😊": ":)", "✍️": "[write]",
+                "📘": "[book]", "🎯": "[target]", "🚀": "[rocket]", "⚖️": "[balance]"
+            }
+            safe += "[emoji]" # Generic replacement for unsupported emojis
+    return safe
+
+print("NOTES PREVIEW:\n", notes)
+
+
 # PDF generation
 pdf = FPDF()
+try:
+    pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)
+    pdf.set_font('DejaVu', '', 12)
+except:
+    pdf.set_font('Arial', size=12)
+
+pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)
+pdf.set_font('DejaVu', '', 12)
 pdf.add_page()
 pdf.set_auto_page_break(auto=True, margin=15)
-pdf.set_font("Arial", size=12)
+# pdf.set_font("Arial", size=12)
 for line in notes.split('\n'):
-    line = line.strip()
+    line = sanitize_for_fpdf(line.strip())  # 👈 Sanitize before writing
     if line.startswith("Q:"):
-        pdf.set_text_color(0, 0, 0)  # Black
-        pdf.set_font("Arial", 'B', 12)  # Bold
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font("DejaVu", '', 13)  # Simulated bold
         pdf.multi_cell(0, 10, line)
     elif line.startswith("A:"):
-        pdf.set_text_color(0, 0, 0)  # Black
-        pdf.set_font("Arial", '', 12)  # Normal
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font("DejaVu", '', 12)
         pdf.multi_cell(0, 10, line)
     else:
-        pdf.set_text_color(0, 0, 0)  # Black
-        pdf.set_font("Arial", '', 12)  # Normal
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font("DejaVu", '', 12)
         pdf.multi_cell(0, 10, line)
 
-pdf_bytes = pdf.output(dest='S').encode('latin-1')
+
+pdf_bytes = pdf.output(dest='S')
+if isinstance(pdf_bytes, str):
+    pdf_bytes = pdf_bytes.encode('latin-1')
 b64_pdf = base64.b64encode(pdf_bytes).decode()
 
 # Combined caption-style links
