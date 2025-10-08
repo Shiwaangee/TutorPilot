@@ -7,8 +7,9 @@ import re
 from fpdf import FPDF
 import io
 
-load_dotenv()
-api_key = os.getenv("OPENROUTER_API_KEY")
+import streamlit as st
+api_key = st.secrets["OPENROUTER_API_KEY"]
+
 
 st.set_page_config(page_title="TutorPilot", layout="centered")
 
