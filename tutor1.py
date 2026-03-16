@@ -13,6 +13,12 @@ api_key = st.secrets["OPENROUTER_API_KEY"]
 
 st.set_page_config(page_title="TutorPilot", layout="centered")
 
+# Google verification meta tag here
+st.markdown(
+    '<meta name="google-site-verification" content="4Rm1nNm1maI51LUuKv_vWCfE-r8qBw4pDGVQI_8VhYk" />',
+    unsafe_allow_html=True
+)
+
 #Add Font Import to Your App
 st.markdown("""
     <style>
