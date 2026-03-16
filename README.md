@@ -25,7 +25,7 @@ Designed for students, TutorPilot offers an interactive learning experience with
 - Python, FPDF, Requests
 
 ## 🌍 Discoverability Tags
-AI tutor, exam preparation, free study tool, Streamlit app, student help, quiz generator, revision notes, interactive learning, TutorPilot
+AI tutor, AI teacher, exam preparation, free study tool, Streamlit app, student help, quiz generator, revision notes, interactive learning, TutorPilot
 
 ## ⭐ Support
 If you find TutorPilot helpful, consider starring this repo to help more students discover it!
