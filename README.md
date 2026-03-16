@@ -1,9 +1,9 @@
+🔗 **Try TutorPilot directly**: [https://tutorpilot.streamlit.app](https://tutorpilot.streamlit.app)
 TutorPilot – Free AI Exam Tutor for Students 🎓✨
 
 TutorPilot is a free, AI-powered exam tutor built with Streamlit. It helps students learn, revise, and practice with precision across subjects like English, Chemistry, Data Structures & Algorithms (DSA), and Project Management.
 Designed for students, TutorPilot offers an interactive learning experience with deep explanations, quizzes, and revision tools. Whether you're preparing for exams or brushing up on concepts, it's a free study tool that makes exam preparation smarter and easier.
 
-🔗 **Try it now**: [https://tutorpilot.streamlit.app](https://tutorpilot.streamlit.app)
 
 ## 💡 Features
 - **Exam Mode**: Deep explanations, practice questions, strict answer checking  
