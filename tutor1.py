@@ -85,7 +85,7 @@ elif mode == "Quiz Mode":
     style = """Without giving any explanation, provide multiple choice questions with four options. 
     - After the user selects an option, explain why the correct answer is right and why the other options are wrong."""
 
-system_prompt = f"You are a highly skilled tutor for {subject}. Use {mode} style: {style}. Keep in mind that you first talk in a very common language because you must think that the student asking does not know anything about that topic and you have to build a bridge between the students current knowledge with the topic so the words you use are more familiar and normal because you are a teacher not a book reader you have to make them understand so be aware you are not just presenting the bookish language. Also, when checking answers, **do not be lenient**. You are a strict examiner.  Also, use markdown formatting for better readability, including bullet points, numbered lists, and bold text where appropriate."
+system_prompt = f"You are a highly skilled tutor for {subject}. Use {mode} style: {style}. Your response should be with respect to {subject}. Keep in mind that you first talk in a very common language because you must think that the student asking does not know anything about that topic and you have to build a bridge between the students current knowledge with the topic so the words you use are more familiar and normal because you are a teacher not a book reader you have to make them understand so be aware you are not just presenting the bookish language. Also, when checking answers, **do not be lenient**. You are a strict examiner.  Also, use markdown formatting for better readability, including bullet points, numbered lists, and bold text where appropriate."
 
 
 # Initialize chat history
@@ -144,7 +144,8 @@ if user_input:
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free", 
+        # "model": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free", 
+        "model": "openrouter/free", 
         # 0.65, 9 jul, 83.95 working niceliy just giving the details of what it is thinking like in theory it is writing **Think: Identify the type of topic** 
         #14.53
 
@@ -160,6 +161,25 @@ if user_input:
             reply = response.json()["choices"][0]["message"]["content"]
         else:
             reply = f"Error: {response.status_code} – {response.text}"
+
+    # with st.spinner("TutorPilot is typing..."):
+        # url = "https://openrouter.ai/api/v1/chat/completions"
+        # reply = None
+
+        # for attempt in range(3):
+        #     response = requests.post(url, headers=headers, json=payload)
+        #     if response.status_code == 200:
+        #         reply = response.json()["choices"][0]["message"]["content"]
+        #         break
+        #     elif response.status_code == 429:
+        #         time.sleep(5 * (attempt + 1))  # exponential backoff
+        #     else:
+        #         reply = f"Error: {response.status_code} – {response.text}"
+        #         break
+
+        # if reply is None:
+        #     reply = "Error: Unable to get a response after retries."
+
 
     # Update chat history
     st.session_state.chat_history.append({"role": "user", "content": user_input, "mode": mode})
