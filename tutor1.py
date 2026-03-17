@@ -13,6 +13,21 @@ api_key = st.secrets["OPENROUTER_API_KEY"]
 
 st.set_page_config(page_title="TutorPilot", layout="centered")
 
+st.markdown(
+    """
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHSYMQD650');
+    </script>
+    """,
+    unsafe_allow_html=True
+)
+
 # Google verification meta tag here
 st.markdown(
     '<meta name="google-site-verification" content="4Rm1nNm1maI51LUuKv_vWCfE-r8qBw4pDGVQI_8VhYk" />',
