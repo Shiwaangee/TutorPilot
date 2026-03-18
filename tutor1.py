@@ -23,6 +23,7 @@ components.html(
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-RHSYMQD650');
+      gtag('config', 'G-RHSYMQD650', { 'debug_mode': true });
     </script>
     """,
     height=0,
