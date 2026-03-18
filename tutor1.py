@@ -15,7 +15,6 @@ st.set_page_config(page_title="TutorPilot", layout="centered")
 
 st.markdown(
     """
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
