@@ -15,20 +15,19 @@ st.set_page_config(page_title="TutorPilot", layout="centered")
 
 import streamlit.components.v1 as components
 
-components.html(
-    """
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RHSYMQD650');
-      gtag('config', 'G-RHSYMQD650', { 'debug_mode': true });
-    </script>
-    """,
-    height=0,
-)
-
+# components.html(
+#     """
+#     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
+#     <script>
+#       window.dataLayer = window.dataLayer || [];
+#       function gtag(){dataLayer.push(arguments);}
+#       gtag('js', new Date());
+#       gtag('config', 'G-RHSYMQD650');
+#       gtag('config', 'G-RHSYMQD650', { 'debug_mode': true });
+#     </script>
+#     """,
+#     height=0,
+# )
 
 # st.markdown(
 #     """
