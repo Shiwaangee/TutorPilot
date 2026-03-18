@@ -13,19 +13,35 @@ api_key = st.secrets["OPENROUTER_API_KEY"]
 
 st.set_page_config(page_title="TutorPilot", layout="centered")
 
-st.markdown(
+import streamlit.components.v1 as components
+
+components.html(
     """
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-RHSYMQD650');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RHSYMQD650');
     </script>
     """,
-    unsafe_allow_html=True
+    height=0,
 )
+
+
+# st.markdown(
+#     """
+#     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
+#     <script>
+#     window.dataLayer = window.dataLayer || [];
+#     function gtag(){dataLayer.push(arguments);}
+#     gtag('js', new Date());
+
+#     gtag('config', 'G-RHSYMQD650');
+#     </script>
+#     """,
+#     unsafe_allow_html=True
+# )
 
 # Google verification meta tag here
 st.markdown(
