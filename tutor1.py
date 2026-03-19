@@ -13,55 +13,6 @@ api_key = st.secrets["OPENROUTER_API_KEY"]
 
 st.set_page_config(page_title="TutorPilot", layout="centered")
 
-import streamlit.components.v1 as components
-
-components.html(
-    """
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id=GTM-PWRVPHXS'+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PWRVPHXS');</script>
-    <!-- End Google Tag Manager -->
-    """,
-    height=0,
-)
-
-
-# components.html(
-#     """
-#     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
-#     <script>
-#       window.dataLayer = window.dataLayer || [];
-#       function gtag(){dataLayer.push(arguments);}
-#       gtag('js', new Date());
-#       gtag('config', 'G-RHSYMQD650');
-#       gtag('config', 'G-RHSYMQD650', { 'debug_mode': true });
-#     </script>
-#     """,
-#     height=0,
-# )
-
-# st.markdown(
-#     """
-#     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHSYMQD650"></script>
-#     <script>
-#     window.dataLayer = window.dataLayer || [];
-#     function gtag(){dataLayer.push(arguments);}
-#     gtag('js', new Date());
-
-#     gtag('config', 'G-RHSYMQD650');
-#     </script>
-#     """,
-#     unsafe_allow_html=True
-# )
-
-# Google verification meta tag here
-st.markdown(
-    '<meta name="google-site-verification" content="4Rm1nNm1maI51LUuKv_vWCfE-r8qBw4pDGVQI_8VhYk" />',
-    unsafe_allow_html=True
-)
 
 #Add Font Import to Your App
 st.markdown("""
